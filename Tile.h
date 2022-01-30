@@ -47,41 +47,41 @@ public:
 	}
 
 	// Getters.
-	int getCol(void) {
+	int getCol(void) const {
 		return col;
 	}
 
-	int getRow(void) {
+	int getRow(void) const {
 		return row;
 	}
 
-	int isVisited(void) const{
+	int isVisited(void) const {
 		return visited;
 	}
 
-	bool getWall(int pos) const{
+	bool getWall(int pos) const {
 		return walls[pos];
 	}
 
-	int getRandomNeighbour(void){
+	int getRandomNeighbour(void) const {
 		return neighbours[Utils::pickRandom(0, neighbours.size() - 1)];
 	}
 
 	// Setters.
-	void setVisited(bool _visited){
+	void setVisited(bool _visited) {
 		visited = _visited;
 	}
 
-	void addNeighbour(int index){
+	void addNeighbour(int index) {
 		neighbours.push_back(index);
 	}
 
-	void setWall(int pos, bool value){
+	void setWall(int pos, bool value) {
 		walls[pos] = value;
 	}
 
 	// Other functions.
-	bool hasNeighbours(void){
+	bool hasNeighbours(void) {
 		return neighbours.size() > 0;
 	}
 

@@ -18,7 +18,7 @@ class Color {
 public:
 	// Constructors and destructor.
 	Color(void);
-	Color(uint8_t _r, uint8_t _g, uint8_t _b);
+	Color(float _r, float _g, float _b);
 	~Color(void) {}
 
 	// Predefined colors.
