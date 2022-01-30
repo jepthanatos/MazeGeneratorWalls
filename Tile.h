@@ -1,8 +1,7 @@
 //============================================================================
 // Name        : Tile.h
 // Author      : Jorge
-// Version     : 0.1
-// Copyright   :
+// Copyright   : https://creativecommons.org/licenses/by/4.0/
 // Description : File to define a tile used in the maze.
 //============================================================================
 
@@ -26,17 +25,10 @@ class Tile {
 public:
 
 	// Default constructor.
-	Tile(void) {
-		col = row = -1;
-		visited = false;
-	}
+	Tile(void) : col{-1}, row{-1}, visited{false} {}
 
 	// Initialize constructor.
-	Tile(int i, int j, bool v) {
-		col = i;
-		row = j;
-		visited = v;
-	}
+	Tile(int i, int j, bool v) : col{i}, row{j}, visited{v} {}
 
 	// Destructor.
 	~Tile(void) {}

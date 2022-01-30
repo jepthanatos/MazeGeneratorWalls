@@ -1,8 +1,7 @@
 //============================================================================
 // Name        : MazeGeneratorWalls.cpp
 // Author      : Jorge
-// Version     :
-// Copyright   : 
+// Copyright   : https://creativecommons.org/licenses/by/4.0/
 // Description : Main program to generate a maze.
 //============================================================================
 

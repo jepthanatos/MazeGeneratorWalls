@@ -1,8 +1,7 @@
 //============================================================================
 // Name        : Maze.cpp
 // Author      : Jorge
-// Version     : 0.1
-// Copyright   :
+// Copyright   : https://creativecommons.org/licenses/by/4.0/
 // Description : File to define and generate a maze.
 //============================================================================
 
@@ -19,26 +18,13 @@
 /*------------------------------------------------------------------------------
  * Constructor.
  */
-Maze::Maze(const int _cols, const int _rows) {
-	cols = _cols;
-	rows = _rows;
-
+Maze::Maze(const int _cols, const int _rows) : cols{_cols}, rows{_rows} {
 	for (int j = 0; j < rows; ++j) {
 		for (int i = 0; i < cols; ++i) {
 			Tile tile(i, j, i == 0 && j == 0);
 			grid.push_back(tile);
 		}
 	}
-}
-
-/*------------------------------------------------------------------------------
- * Copy constructor.
- */
-Maze::Maze(const Maze &other) {
-	cols = other.cols;
-	rows = other.cols;
-	grid = other.grid;
-	visited = other.visited;
 }
 
 /*------------------------------------------------------------------------------
@@ -105,7 +91,7 @@ void Maze::removeWalls(Tile &a, Tile &b) {
 /*------------------------------------------------------------------------------
  * Procedure to generate a random maze.
  */
-void Maze::generateMaze() {
+void Maze::generateMaze(void) {
 	int currentIndex = 0;
 
 	do {
@@ -125,7 +111,7 @@ void Maze::generateMaze() {
 /*------------------------------------------------------------------------------
  * Procedure to print a maze while it's being generated.
  */
-void Maze::generateMazePrinting() {
+void Maze::generateMazePrinting(void) {
 	int currentIndex = 0;
 	bool firstTime = true;
 	bool completed = false;
@@ -196,7 +182,7 @@ void Maze::generateMazePrinting() {
 /*------------------------------------------------------------------------------
  * Procedure to print an already generated maze.
  */
-void Maze::printMaze() {
+void Maze::printMaze(void) {
 	Img img(cols * 10, rows * 10, "Generated Maze");
 
 	bool firstTime = true;

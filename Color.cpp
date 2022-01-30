@@ -1,8 +1,7 @@
 //============================================================================
 // Name        : Color.cpp
 // Author      : Jorge
-// Version     : 0.1
-// Copyright   :
+// Copyright   : https://creativecommons.org/licenses/by/4.0/
 // Description : File to define RGB colors used by CImg library.
 //============================================================================
 
@@ -15,22 +14,12 @@
 /*------------------------------------------------------------------------------
  * Constructor.
  */
-Color::Color(void)
-{
-    r = 0.f;
-    g = 0.f;
-    b = 0.f;
-}
+Color::Color(void) : r{0.f}, g{0.f}, b{0.f} {}
 
 /*------------------------------------------------------------------------------
  * Constructor.
  */
-Color::Color(uint8_t _r, uint8_t _g, uint8_t _b)
-{
-    r = _r;
-    g = _g;
-    b = _b;
-}
+Color::Color(uint8_t _r, uint8_t _g, uint8_t _b) : r{_r}, g{_g}, b{_b} {}
 
 /*------------------------------------------------------------------------------
  * Function to define blue.

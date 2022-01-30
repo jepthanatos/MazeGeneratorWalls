@@ -1,8 +1,7 @@
 //============================================================================
 // Name        : Maze.cpp
 // Author      : Jorge
-// Version     : 0.1
-// Copyright   :
+// Copyright   : https://creativecommons.org/licenses/by/4.0/
 // Description : File to define and generate a maze.
 //============================================================================
 
@@ -25,9 +24,8 @@
  */
 class Maze {
 public:
-	// Constructor, copy constructor and destructor.
+	// Constructor and destructor.
 	Maze(const int _cols, const int _rows);
-	Maze(const Maze &other);
 	~Maze(void) {}
 
 	// Public functions.
