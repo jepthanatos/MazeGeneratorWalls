@@ -24,9 +24,10 @@ int main() {
 	// Columns and rows.
 	const int COLUMNS = 100;
 	const int ROWS = 50;
+	const int ROOMS = (COLUMNS + ROWS) / 50;
 
 	// Create an empty maze.
-	Maze maze(COLUMNS, ROWS);
+	Maze maze(COLUMNS, ROWS, ROOMS);
 
 	// Print the maze while generating it.
 	maze.generateMazePrinting();

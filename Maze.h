@@ -25,7 +25,7 @@
 class Maze {
 public:
 	// Constructor and destructor.
-	Maze(const int _cols, const int _rows);
+	Maze(const int _cols, const int _rows, const int _rooms);
 	~Maze(void) {}
 
 	// Public functions.
@@ -41,6 +41,7 @@ public:
 private:
 
 	// Private functions.
+	bool createRandomRoom(void);
 	int index(int i, int j);
 	int checkNeighbours(Tile &c);
 	void removeWalls(Tile &a, Tile &b);

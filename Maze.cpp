@@ -9,6 +9,7 @@
 
 // Local includes.
 #include "Color.h"
+#include "Utils.h"
 
 
 //==============================================================================
@@ -18,13 +19,62 @@
 /*------------------------------------------------------------------------------
  * Constructor.
  */
-Maze::Maze(const int _cols, const int _rows) : cols{_cols}, rows{_rows} {
+Maze::Maze(const int _cols, const int _rows, const int _rooms) : cols{_cols}, rows{_rows} {
 	for (int j = 0; j < rows; ++j) {
 		for (int i = 0; i < cols; ++i) {
-			Tile tile(i, j, i == 0 && j == 0);
+			Tile tile(i, j, i == 0 and j == 0);
 			grid.push_back(tile);
 		}
 	}
+
+	int rooms = _rooms;
+	while (rooms > 0) {
+		if (createRandomRoom())	{
+			--rooms;
+		}
+	}
+}
+
+/*------------------------------------------------------------------------------
+ * Function to create a random room inside the maze.
+ */
+bool Maze::createRandomRoom(void) {
+	int sizeCols =
+		Utils::pickRandom((cols)/Utils::pickRandom(5,10), (cols)/Utils::pickRandom(2,4));
+	int sizeRows =
+		Utils::pickRandom((rows)/Utils::pickRandom(5,10), (rows)/Utils::pickRandom(2,4));
+
+	Tile roomTopLeft
+		(Utils::pickRandom(0, cols),
+		 Utils::pickRandom(0, rows));
+
+	int topLeftIndex = index(roomTopLeft.getCol(), roomTopLeft.getRow());
+	int topRightIndex = index(roomTopLeft.getCol() + sizeCols, roomTopLeft.getRow());
+	int bottomLeftIndex = index(roomTopLeft.getCol(), roomTopLeft.getRow() + sizeRows);
+	int bottomRigthIndex = index(roomTopLeft.getCol() + sizeCols, roomTopLeft.getRow() + sizeRows);
+
+	if ((topLeftIndex != -1) and (bottomRigthIndex != -1) and
+		!grid[topLeftIndex].getIsRoom() and !grid[topRightIndex].getIsRoom() and
+		!grid[bottomLeftIndex].getIsRoom() and !grid[bottomRigthIndex].getIsRoom()) {
+		for (int j = roomTopLeft.getCol(); j < roomTopLeft.getCol() + sizeCols; ++j) {
+			for (int i = roomTopLeft.getRow(); i < roomTopLeft.getRow() + sizeRows; ++i) {
+				if (grid[index(j,i)].getIsRoom()) {
+					return false;
+				}
+			}
+		}
+	}
+	else {
+		return false;
+	}
+
+	for (int j = roomTopLeft.getCol(); j < roomTopLeft.getCol() + sizeCols; ++j) {
+		for (int i = roomTopLeft.getRow(); i < roomTopLeft.getRow() + sizeRows; ++i) {
+			grid[index(j,i)].setIsRoom(true);
+		}
+	}
+
+	return true;
 }
 
 /*------------------------------------------------------------------------------
@@ -32,7 +82,7 @@ Maze::Maze(const int _cols, const int _rows) : cols{_cols}, rows{_rows} {
  * Returns -1 if the col or the row are out of the array.
  */
 int Maze::index(int col, int row) {
-	if (col < 0 or row < 0 or col >= cols or row >= rows){
+	if (col < 0 or row < 0 or col >= cols or row >= rows) {
 		return -1;
 	}
 	return col + row * cols;
@@ -54,7 +104,7 @@ int Maze::checkNeighbours(Tile &tile) {
 
 	for (unsigned int i = 0; i < vectorIndex.size(); ++i) {
 		int index = vectorIndex[i];
-		if (index > -1 and !grid[index].isVisited()){
+		if (index > -1 and !grid[index].isVisited() and !grid[index].getIsRoom()){
 			tile.addNeighbour(index);
 		}
 	}

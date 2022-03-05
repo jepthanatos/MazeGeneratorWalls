@@ -25,10 +25,10 @@ class Tile {
 public:
 
 	// Default constructor.
-	Tile(void) : col{-1}, row{-1}, visited{false} {}
+	Tile(void) : col{-1}, row{-1}, visited{false}, isRoom{false} {}
 
 	// Initialize constructor.
-	Tile(int i, int j, bool v) : col{i}, row{j}, visited{v} {}
+	Tile(int i, int j, bool v = false, bool r = false) : col{i}, row{j}, visited{v}, isRoom{r} {}
 
 	// Destructor.
 	~Tile(void) {}
@@ -43,7 +43,7 @@ public:
 	}
 
 	Tile operator+(const Tile &tile) {
-		return Tile(tile.col + col, tile.row + row, false);
+		return Tile(tile.col + col, tile.row + row, false, this->isRoom and tile.isRoom);
 	}
 
 	// Getters.
@@ -57,6 +57,10 @@ public:
 
 	int isVisited(void) const {
 		return visited;
+	}
+
+	bool getIsRoom(void) const {
+		return isRoom;
 	}
 
 	bool getWall(int pos) const {
@@ -80,6 +84,13 @@ public:
 		walls[pos] = value;
 	}
 
+	void setIsRoom(bool _isRoom) {
+		isRoom = _isRoom;
+		if (isRoom) {
+			walls = { false, false, false, false };
+		}
+	}
+
 	// Other functions.
 	bool hasNeighbours(void) {
 		return neighbours.size() > 0;
@@ -90,7 +101,7 @@ private:
 	// Private variables
 	int col, row;
 	std::vector<bool> walls = { true, true, true, true };
-	bool visited;
+	bool visited, isRoom;
 	std::vector<int> neighbours;
 
 };
