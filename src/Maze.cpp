@@ -11,7 +11,6 @@
 #include "Color.h"
 #include "Utils.h"
 
-
 //==============================================================================
 /* Maze */
 //==============================================================================
@@ -19,17 +18,22 @@
 /*------------------------------------------------------------------------------
  * Constructor.
  */
-Maze::Maze(const int _cols, const int _rows, const int _rooms) : cols{_cols}, rows{_rows} {
-	for (int j = 0; j < rows; ++j) {
-		for (int i = 0; i < cols; ++i) {
+Maze::Maze(const int _cols, const int _rows, const int _rooms) : cols{_cols}, rows{_rows}
+{
+	for (int j = 0; j < rows; ++j)
+	{
+		for (int i = 0; i < cols; ++i)
+		{
 			Tile tile(i, j, i == 0 and j == 0);
 			grid.push_back(tile);
 		}
 	}
 
 	int rooms = _rooms;
-	while (rooms > 0) {
-		if (createRandomRoom())	{
+	while (rooms > 0)
+	{
+		if (createRandomRoom())
+		{
 			--rooms;
 		}
 	}
@@ -38,15 +42,15 @@ Maze::Maze(const int _cols, const int _rows, const int _rooms) : cols{_cols}, ro
 /*------------------------------------------------------------------------------
  * Function to create a random room inside the maze.
  */
-bool Maze::createRandomRoom(void) {
+bool Maze::createRandomRoom(void)
+{
 	int sizeCols =
-		Utils::pickRandom((cols)/Utils::pickRandom(5,10), (cols)/Utils::pickRandom(2,4));
+		Utils::pickRandom((cols) / Utils::pickRandom(5, 10), (cols) / Utils::pickRandom(2, 4));
 	int sizeRows =
-		Utils::pickRandom((rows)/Utils::pickRandom(5,10), (rows)/Utils::pickRandom(2,4));
+		Utils::pickRandom((rows) / Utils::pickRandom(5, 10), (rows) / Utils::pickRandom(2, 4));
 
-	Tile roomTopLeft
-		(Utils::pickRandom(0, cols),
-		 Utils::pickRandom(0, rows));
+	Tile roomTopLeft(Utils::pickRandom(0, cols),
+					 Utils::pickRandom(0, rows));
 
 	int topLeftIndex = index(roomTopLeft.getCol(), roomTopLeft.getRow());
 	int topRightIndex = index(roomTopLeft.getCol() + sizeCols, roomTopLeft.getRow());
@@ -55,22 +59,29 @@ bool Maze::createRandomRoom(void) {
 
 	if ((topLeftIndex != -1) and (bottomRigthIndex != -1) and
 		!grid[topLeftIndex].getIsRoom() and !grid[topRightIndex].getIsRoom() and
-		!grid[bottomLeftIndex].getIsRoom() and !grid[bottomRigthIndex].getIsRoom()) {
-		for (int j = roomTopLeft.getCol(); j < roomTopLeft.getCol() + sizeCols; ++j) {
-			for (int i = roomTopLeft.getRow(); i < roomTopLeft.getRow() + sizeRows; ++i) {
-				if (grid[index(j,i)].getIsRoom()) {
+		!grid[bottomLeftIndex].getIsRoom() and !grid[bottomRigthIndex].getIsRoom())
+	{
+		for (int j = roomTopLeft.getCol(); j < roomTopLeft.getCol() + sizeCols; ++j)
+		{
+			for (int i = roomTopLeft.getRow(); i < roomTopLeft.getRow() + sizeRows; ++i)
+			{
+				if (grid[index(j, i)].getIsRoom())
+				{
 					return false;
 				}
 			}
 		}
 	}
-	else {
+	else
+	{
 		return false;
 	}
 
-	for (int j = roomTopLeft.getCol(); j < roomTopLeft.getCol() + sizeCols; ++j) {
-		for (int i = roomTopLeft.getRow(); i < roomTopLeft.getRow() + sizeRows; ++i) {
-			grid[index(j,i)].setIsRoom(true);
+	for (int j = roomTopLeft.getCol(); j < roomTopLeft.getCol() + sizeCols; ++j)
+	{
+		for (int i = roomTopLeft.getRow(); i < roomTopLeft.getRow() + sizeRows; ++i)
+		{
+			grid[index(j, i)].setIsRoom(true);
 		}
 	}
 
@@ -81,8 +92,10 @@ bool Maze::createRandomRoom(void) {
  * Function to get the index of a tile.
  * Returns -1 if the col or the row are out of the array.
  */
-int Maze::index(int col, int row) {
-	if (col < 0 or row < 0 or col >= cols or row >= rows) {
+int Maze::index(int col, int row)
+{
+	if (col < 0 or row < 0 or col >= cols or row >= rows)
+	{
 		return -1;
 	}
 	return col + row * cols;
@@ -92,25 +105,31 @@ int Maze::index(int col, int row) {
  * Function to get a random neighbor of a given tile.
  * Returns -1 if the there all neighbors have been visited.
  */
-int Maze::checkNeighbours(Tile &tile) {
+int Maze::checkNeighbours(Tile &tile)
+{
 	std::vector<int> vectorIndex = {
-		index(tile.getCol(), tile.getRow() - 1), 	// Top
-		index(tile.getCol() + 1, tile.getRow()),	// Right
-		index(tile.getCol(), tile.getRow() + 1),	// Bottom
-		index(tile.getCol() - 1, tile.getRow()) 	// Left
+		index(tile.getCol(), tile.getRow() - 1), // Top
+		index(tile.getCol() + 1, tile.getRow()), // Right
+		index(tile.getCol(), tile.getRow() + 1), // Bottom
+		index(tile.getCol() - 1, tile.getRow())	 // Left
 	};
 
 	tile.clearNeighbours();
 
-	for (unsigned int i = 0; i < vectorIndex.size(); ++i) {
+	for (unsigned int i = 0; i < vectorIndex.size(); ++i)
+	{
 		int index = vectorIndex[i];
-		if (index > -1 and !grid[index].isVisited() and !grid[index].getIsRoom()){
+		if (index > -1 and !grid[index].isVisited() and !grid[index].getIsRoom())
+		{
 			tile.addNeighbour(index);
 		}
 	}
-	if (tile.hasNeighbours()) {
+	if (tile.hasNeighbours())
+	{
 		return tile.getRandomNeighbour();
-	} else {
+	}
+	else
+	{
 		return -1;
 	}
 }
@@ -118,21 +137,28 @@ int Maze::checkNeighbours(Tile &tile) {
 /*------------------------------------------------------------------------------
  * Procedure to remove walls from two given tiles.
  */
-void Maze::removeWalls(Tile &a, Tile &b) {
+void Maze::removeWalls(Tile &a, Tile &b)
+{
 	int x = a.getCol() - b.getCol();
-	if (x == 1) {
+	if (x == 1)
+	{
 		a.setWall(3, false);
 		b.setWall(1, false);
-	} else if (x == -1) {
+	}
+	else if (x == -1)
+	{
 		a.setWall(1, false);
 		b.setWall(3, false);
 	}
 
 	int y = a.getRow() - b.getRow();
-	if (y == 1) {
+	if (y == 1)
+	{
 		a.setWall(0, false);
 		b.setWall(2, false);
-	} else if (y == -1) {
+	}
+	else if (y == -1)
+	{
 		a.setWall(2, false);
 		b.setWall(0, false);
 	}
@@ -141,17 +167,22 @@ void Maze::removeWalls(Tile &a, Tile &b) {
 /*------------------------------------------------------------------------------
  * Procedure to generate a random maze.
  */
-void Maze::generateMaze(void) {
+void Maze::generateMaze(void)
+{
 	int currentIndex = 0;
 
-	do {
+	do
+	{
 		int nextIndex = checkNeighbours(grid[currentIndex]);
-		if (nextIndex > -1) {
+		if (nextIndex > -1)
+		{
 			removeWalls(grid[currentIndex], grid[nextIndex]);
 			visited.push(currentIndex);
 			grid[nextIndex].setVisited(true);
 			currentIndex = nextIndex;
-		} else {
+		}
+		else
+		{
 			currentIndex = visited.top();
 			visited.pop();
 		}
@@ -161,23 +192,28 @@ void Maze::generateMaze(void) {
 /*------------------------------------------------------------------------------
  * Procedure to print a maze while it's being generated.
  */
-void Maze::generateMazePrinting(void) {
+void Maze::generateMazePrinting(void)
+{
 	int currentIndex = 0;
 	bool firstTime = true;
 	bool completed = false;
 
 	Img img(cols * 10, rows * 10, "Generating Maze");
 
-	while (!img.isClosed()) {
+	while (!img.isClosed())
+	{
 		// Print the grid at the start only one time.
-		if (firstTime) {
-			for (int j = 0; j < rows; ++j) {
-				for (int i = 0; i < cols; ++i) {
+		if (firstTime)
+		{
+			for (int j = 0; j < rows; ++j)
+			{
+				for (int i = 0; i < cols; ++i)
+				{
 					const Tile tile = grid[index(i, j)];
 
 					// Print each tile yellow.
 					img.drawRectangle(i * 10, j * 10, i * 10 + 10, j * 10 + 10,
-						(float*) &Color::yellow());
+									  (float *)&Color::yellow());
 
 					printWalls(i, j, tile, img);
 				}
@@ -185,33 +221,41 @@ void Maze::generateMazePrinting(void) {
 			firstTime = false;
 		}
 
-		if (!completed){
-			do {
+		if (!completed)
+		{
+			do
+			{
 				int nextIndex = checkNeighbours(grid[currentIndex]);
 
-				if (nextIndex > -1) {
+				if (nextIndex > -1)
+				{
 					removeWalls(grid[currentIndex], grid[nextIndex]);
 					visited.push(currentIndex);
 					grid[nextIndex].setVisited(true);
 					currentIndex = nextIndex;
-				} else {
+				}
+				else
+				{
 					currentIndex = visited.top();
 					visited.pop();
 				}
 
-				for (int j = 0; j < rows; ++j) {
-					for (int i = 0; i < cols; ++i) {
+				for (int j = 0; j < rows; ++j)
+				{
+					for (int i = 0; i < cols; ++i)
+					{
 						const Tile tile = grid[index(i, j)];
 
 						// Print the visited and actual tiles.
-						if (currentIndex == index(i, j)) {
-							img.drawRectangle
-								(i * 10, j * 10, i * 10 + 10, j * 10 + 10,
-									(float*) &Color::red());
-						} else if (tile.isVisited()) {
-							img.drawRectangle
-								(i * 10, j * 10, i * 10 + 10, j * 10 + 10,
-									(float*) &Color::blue());
+						if (currentIndex == index(i, j))
+						{
+							img.drawRectangle(i * 10, j * 10, i * 10 + 10, j * 10 + 10,
+											  (float *)&Color::red());
+						}
+						else if (tile.isVisited())
+						{
+							img.drawRectangle(i * 10, j * 10, i * 10 + 10, j * 10 + 10,
+											  (float *)&Color::blue());
 						}
 
 						printWalls(i, j, tile, img);
@@ -232,20 +276,25 @@ void Maze::generateMazePrinting(void) {
 /*------------------------------------------------------------------------------
  * Procedure to print an already generated maze.
  */
-void Maze::printMaze(void) {
+void Maze::printMaze(void)
+{
 	Img img(cols * 10, rows * 10, "Generated Maze");
 
 	bool firstTime = true;
 
-	while (!img.isClosed()) {
-		if (firstTime) {
-			for (int j = 0; j < rows; ++j) {
-				for (int i = 0; i < cols; ++i) {
+	while (!img.isClosed())
+	{
+		if (firstTime)
+		{
+			for (int j = 0; j < rows; ++j)
+			{
+				for (int i = 0; i < cols; ++i)
+				{
 					const Tile tile = grid[index(i, j)];
 
 					// Print each tile blue.
 					img.drawRectangle(i * 10, j * 10, i * 10 + 10, j * 10 + 10,
-							(float*) &Color::blue());
+									  (float *)&Color::blue());
 
 					printWalls(i, j, tile, img);
 				}
@@ -259,29 +308,34 @@ void Maze::printMaze(void) {
 /*------------------------------------------------------------------------------
  * Procedure to print a maze's walls.
  */
-void Maze::printWalls(int i, int j, const Tile &tile, Img &img){
+void Maze::printWalls(int i, int j, const Tile &tile, Img &img)
+{
 	// Top.
-	if (tile.getWall(0)) {
+	if (tile.getWall(0))
+	{
 		img.drawLine(i * 10, j * 10, i * 10 + 10, j * 10,
-			(float*) &Color::black());
+					 (float *)&Color::black());
 	}
 
 	// Bottom.
-	if (tile.getWall(2)) {
-		img.drawLine(i * 10, j * 10 + 10, i * 10 + 10,	j * 10 + 10,
-			(float*) &Color::black());
+	if (tile.getWall(2))
+	{
+		img.drawLine(i * 10, j * 10 + 10, i * 10 + 10, j * 10 + 10,
+					 (float *)&Color::black());
 	}
 
 	// Right.
-	if (tile.getWall(1)) {
-		img.drawLine(i * 10 + 10, j * 10, i * 10 + 10,	j * 10 + 10,
-			(float*) &Color::black());
+	if (tile.getWall(1))
+	{
+		img.drawLine(i * 10 + 10, j * 10, i * 10 + 10, j * 10 + 10,
+					 (float *)&Color::black());
 	}
 
 	// Left.
-	if (tile.getWall(3)) {
+	if (tile.getWall(3))
+	{
 		img.drawLine(i * 10, j * 10, i * 10, j * 10 + 10,
-			(float*) &Color::black());
+					 (float *)&Color::black());
 	}
 }
 

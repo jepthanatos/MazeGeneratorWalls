@@ -20,10 +20,10 @@
 /*------------------------------------------------------------------------------
  * Class to define a tile used in the maze.
  */
-class Tile {
+class Tile
+{
 
 public:
-
 	// Default constructor.
 	Tile(void) : col{-1}, row{-1}, visited{false}, isRoom{false} {}
 
@@ -33,79 +33,91 @@ public:
 	// Destructor.
 	~Tile(void) {}
 
-	void clearNeighbours(void){
+	void clearNeighbours(void)
+	{
 		neighbours.clear();
 	}
 
 	// Operators.
-	bool operator==(const Tile &tile) {
+	bool operator==(const Tile &tile)
+	{
 		return tile.col == col and tile.row == row;
 	}
 
-	Tile operator+(const Tile &tile) {
+	Tile operator+(const Tile &tile)
+	{
 		return Tile(tile.col + col, tile.row + row, false, this->isRoom and tile.isRoom);
 	}
 
 	// Getters.
-	int getCol(void) const {
+	int getCol(void) const
+	{
 		return col;
 	}
 
-	int getRow(void) const {
+	int getRow(void) const
+	{
 		return row;
 	}
 
-	int isVisited(void) const {
+	int isVisited(void) const
+	{
 		return visited;
 	}
 
-	bool getIsRoom(void) const {
+	bool getIsRoom(void) const
+	{
 		return isRoom;
 	}
 
-	bool getWall(int pos) const {
+	bool getWall(int pos) const
+	{
 		return walls[pos];
 	}
 
-	int getRandomNeighbour(void) const {
+	int getRandomNeighbour(void) const
+	{
 		return neighbours[Utils::pickRandom(0, neighbours.size() - 1)];
 	}
 
 	// Setters.
-	void setVisited(bool _visited) {
+	void setVisited(bool _visited)
+	{
 		visited = _visited;
 	}
 
-	void addNeighbour(int index) {
+	void addNeighbour(int index)
+	{
 		neighbours.push_back(index);
 	}
 
-	void setWall(int pos, bool value) {
+	void setWall(int pos, bool value)
+	{
 		walls[pos] = value;
 	}
 
-	void setIsRoom(bool _isRoom) {
+	void setIsRoom(bool _isRoom)
+	{
 		isRoom = _isRoom;
-		if (isRoom) {
-			walls = { false, false, false, false };
+		if (isRoom)
+		{
+			walls = {false, false, false, false};
 		}
 	}
 
 	// Other functions.
-	bool hasNeighbours(void) {
+	bool hasNeighbours(void)
+	{
 		return neighbours.size() > 0;
 	}
 
 private:
-
 	// Private variables
 	int col, row;
-	std::vector<bool> walls = { true, true, true, true };
+	std::vector<bool> walls = {true, true, true, true};
 	bool visited, isRoom;
 	std::vector<int> neighbours;
-
 };
 
 //------------------------------------------------------------------------------
 #endif /* TILE_H_ */
-
