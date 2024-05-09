@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Maze.cpp
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.1
+// Copyright   :
 // Description : File to define and generate a maze.
 //============================================================================
 
@@ -18,24 +19,28 @@
 /*------------------------------------------------------------------------------
  * Constructor.
  */
-Maze::Maze(const int _cols, const int _rows) : cols{_cols}, rows{_rows} {
+Maze::Maze(const int _cols, const int _rows) {
+	cols = _cols;
+	rows = _rows;
+
 	for (int j = 0; j < rows; ++j) {
+		rowOfTiles aux;
 		for (int i = 0; i < cols; ++i) {
 			Tile tile(i, j, i == 0 && j == 0);
-			grid.push_back(tile);
+			aux.push_back(tile);
 		}
+		grid.push_back(aux);
 	}
 }
 
 /*------------------------------------------------------------------------------
- * Function to get the index of a tile.
- * Returns -1 if the col or the row are out of the array.
+ * Copy constructor.
  */
-int Maze::index(int col, int row) {
-	if (col < 0 or row < 0 or col >= cols or row >= rows){
-		return -1;
-	}
-	return col + row * cols;
+Maze::Maze(const Maze &other) {
+	cols = other.cols;
+	rows = other.cols;
+	grid = other.grid;
+	visited = other.visited;
 }
 
 /*------------------------------------------------------------------------------
@@ -91,7 +96,7 @@ void Maze::removeWalls(Tile &a, Tile &b) {
 /*------------------------------------------------------------------------------
  * Procedure to generate a random maze.
  */
-void Maze::generateMaze(void) {
+void Maze::generateMaze() {
 	int currentIndex = 0;
 
 	do {
@@ -111,7 +116,7 @@ void Maze::generateMaze(void) {
 /*------------------------------------------------------------------------------
  * Procedure to print a maze while it's being generated.
  */
-void Maze::generateMazePrinting(void) {
+void Maze::generateMazePrinting() {
 	int currentIndex = 0;
 	bool firstTime = true;
 	bool completed = false;
@@ -182,7 +187,7 @@ void Maze::generateMazePrinting(void) {
 /*------------------------------------------------------------------------------
  * Procedure to print an already generated maze.
  */
-void Maze::printMaze(void) {
+void Maze::printMaze() {
 	Img img(cols * 10, rows * 10, "Generated Maze");
 
 	bool firstTime = true;

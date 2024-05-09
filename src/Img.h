@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Img.h
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.2
+// Copyright   :
 // Description : File to wrap CImg library.
 //============================================================================
 
@@ -24,16 +25,15 @@ class Img {
 
 public:
 
-	// Constructor and destructor.
+	// Constructor.
 	Img(int w, int h, std::string title);
-	~Img(void) {}
 
 	// Functions to get the height and width of the image.
-	int getHeight(void) const;
-	int getWidth(void) const;
+	int getHeight() const;
+	int getWidth() const;
 
 	// Function to know if the image is closed.
-	bool isClosed(void) const;
+	bool isClosed() const;
 
 	// Procedure to set the title of the window.
 	void setTitle(const char *title);
@@ -47,11 +47,11 @@ public:
 		 float *color, const float opacity = 1);
 
 	// Procedure to display the image.
-	void display(void);
+	void display();
 
 	// Function to know if the left mouse button has been clicked.
 	// Returns true (false) if the left mouse button has (not) been clicked.
-	bool mouseClick(void);
+	bool mouseClick();
 
 private:
 

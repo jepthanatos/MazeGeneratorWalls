@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Maze.cpp
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.1
+// Copyright   :
 // Description : File to define and generate a maze.
 //============================================================================
 
@@ -24,8 +25,13 @@
  */
 class Maze {
 public:
-	// Constructor and destructor.
+	// Types.
+	typedef std::vector<Tile> rowOfTiles;
+	typedef std::vector<rowOfTiles> matrixOfTiles;
+
+	// Constructor, copy constructor and destructor.
 	Maze(const int _cols, const int _rows);
+	Maze(const Maze &other);
 	~Maze(void) {}
 
 	// Public functions.
@@ -34,21 +40,20 @@ public:
 	void printMaze(void);
 
 	// Getters.
-	std::vector<Tile> getGrid(void) {
+	matrixOfTiles getGrid(void) {
 		return grid;
 	}
 
 private:
 
 	// Private functions.
-	int index(int i, int j);
 	int checkNeighbours(Tile &c);
 	void removeWalls(Tile &a, Tile &b);
 	void printWalls(int i, int j, const Tile &tile, Img &img);
 
 	// Private variables
 	int cols, rows;
-	std::vector<Tile> grid;
+	matrixOfTiles grid;
 	std::stack<int> visited;
 };
 

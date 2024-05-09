@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Utils.h
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.1
+// Copyright   :
 // Description : File with useful functions.
 //============================================================================
 

@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Img.cpp
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.2
+// Copyright   :
 // Description : File to wrap CImg library.
 //============================================================================
 
@@ -24,21 +25,21 @@ Img::Img(int w, int h, std::string title) :
 /*------------------------------------------------------------------------------
  * Function to get the height.
  */
-int Img::getHeight(void) const {
+int Img::getHeight() const {
 	return img.height();
 }
 
 /*------------------------------------------------------------------------------
  * Function to get the width.
  */
-int Img::getWidth(void) const {
+int Img::getWidth() const {
 	return img.width();
 }
 
 /*------------------------------------------------------------------------------
  * Function to know if the image is closed.
  */
-bool Img::isClosed(void) const {
+bool Img::isClosed() const {
 	return disp.is_closed();
 }
 
@@ -83,7 +84,7 @@ void Img::drawRectangle
 /*------------------------------------------------------------------------------
  * Procedure to display the image.
  */
-void Img::display(void) {
+void Img::display() {
 	disp.display(img);
 }
 
@@ -91,7 +92,7 @@ void Img::display(void) {
  * Function to know if the left mouse button has been clicked.
  * Returns true (false) if the left mouse button has (not) been clicked.
  */
-bool Img::mouseClick(void) {
+bool Img::mouseClick() {
 	return disp.button() & 1;
 }
 

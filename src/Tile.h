@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Tile.h
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.1
+// Copyright   :
 // Description : File to define a tile used in the maze.
 //============================================================================
 
@@ -25,10 +26,17 @@ class Tile {
 public:
 
 	// Default constructor.
-	Tile(void) : col{-1}, row{-1}, visited{false} {}
+	Tile(void) {
+		col = row = -1;
+		visited = false;
+	}
 
 	// Initialize constructor.
-	Tile(int i, int j, bool v) : col{i}, row{j}, visited{v} {}
+	Tile(int i, int j, bool v) {
+		col = i;
+		row = j;
+		visited = v;
+	}
 
 	// Destructor.
 	~Tile(void) {}
@@ -47,41 +55,41 @@ public:
 	}
 
 	// Getters.
-	int getCol(void) const {
+	int getCol(void) {
 		return col;
 	}
 
-	int getRow(void) const {
+	int getRow(void) {
 		return row;
 	}
 
-	int isVisited(void) const {
+	int isVisited(void) const{
 		return visited;
 	}
 
-	bool getWall(int pos) const {
+	bool getWall(int pos) const{
 		return walls[pos];
 	}
 
-	int getRandomNeighbour(void) const {
+	int getRandomNeighbour(void){
 		return neighbours[Utils::pickRandom(0, neighbours.size() - 1)];
 	}
 
 	// Setters.
-	void setVisited(bool _visited) {
+	void setVisited(bool _visited){
 		visited = _visited;
 	}
 
-	void addNeighbour(int index) {
+	void addNeighbour(int index){
 		neighbours.push_back(index);
 	}
 
-	void setWall(int pos, bool value) {
+	void setWall(int pos, bool value){
 		walls[pos] = value;
 	}
 
 	// Other functions.
-	bool hasNeighbours(void) {
+	bool hasNeighbours(void){
 		return neighbours.size() > 0;
 	}
 

@@ -1,7 +1,8 @@
 //============================================================================
 // Name        : Color.h
 // Author      : Jorge
-// Copyright   : https://creativecommons.org/licenses/by/4.0/
+// Version     : 0.1
+// Copyright   :
 // Description : File to define RGB colors used by CImg library.
 //============================================================================
 
@@ -18,7 +19,7 @@ class Color {
 public:
 	// Constructors and destructor.
 	Color(void);
-	Color(float _r, float _g, float _b);
+	Color(uint8_t _r, uint8_t _g, uint8_t _b);
 	~Color(void) {}
 
 	// Predefined colors.
